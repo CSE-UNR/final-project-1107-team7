@@ -39,15 +39,9 @@ int main(){
 		printf("FILE NOT OPENED\n");
 	}   
 	readMadlib(mad_lib, fp);
-	//displayFinished();
-	//printInline();
-	for(int i=0;i<MAX_SLOTS;i++){
-		if(mad_lib[i][0] == '\0'){
-			fclose(fp2);
-			return 0;
-		}
-		printf("%s", mad_lib[i]);
-	}
+	
+	displayFinished(mad_lib, inputs);
+	printf("\n");
 	
 	fclose(fp2);
 	
@@ -95,3 +89,38 @@ void readMadlib(char madlib[MAX_SLOTS+1][STR_CAP+1], FILE* fp ){
 		fgets(junk, STR_CAP, fp);
 	}
 }
+
+void displayFinished(char madlibs[MAX_SLOTS+1][STR_CAP+1], char inputs[MAX_SLOTS][MAX_LENGTH+1]){
+	int i=0;
+	while(madlibs[i][0] != '\0'){
+		printInline(madlibs[i]);
+		if(madlibs[i+1][0] != '\0'){
+			printf(" ");
+			printInline(inputs[i]);
+		
+		}
+		if(madlibs[i+1][0] != '.'){
+			printf(" "); 
+		}
+		i++;
+	}		
+}
+	
+void printInline(char string[]){
+	for(int i=0; i<STR_CAP+1; i++){
+		if(string[i] == '\0'){
+			break;
+		}
+		
+		if(string[i] != '\n'){
+			printf("%c", string[i]);
+		}
+	}
+}
+		
+		
+		
+	
+	
+
+
