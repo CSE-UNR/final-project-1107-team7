@@ -14,9 +14,9 @@
 #define STR_CAP 200 //Cap of madlib line length
 
 void parseMadlib(char[MAX_SLOTS][MAX_LENGTH+1], FILE*);
-void readMadlib(char madlib[MAX_SLOTS+1][STR_CAP+1], FILE* fp);
+void readMadlib(char madlib[MAX_SLOTS+2][STR_CAP+1], FILE* fp);
 _Bool getUserWord(char[MAX_LENGTH+1], char[MAX_LENGTH+1]);
-void displayFinished(char[MAX_SLOTS+1][STR_CAP+1], char[MAX_SLOTS][MAX_LENGTH+1]);
+void displayFinished(char[MAX_SLOTS+2][STR_CAP+1], char[MAX_SLOTS][MAX_LENGTH+1]);
 void printInline(char[]);
 void stringCopy(char[], char[]);
 
@@ -29,8 +29,8 @@ int main(int argc, char* argv[]){
 		stringCopy(INFILE, infile);
 	}
 	char inputs[MAX_SLOTS][MAX_LENGTH+1];
-	char mad_lib[MAX_SLOTS+1][STR_CAP+1];
-	for(int i=0;i<MAX_SLOTS+1;i++){
+	char mad_lib[MAX_SLOTS+2][STR_CAP+1]; // Enough to have n+1 slots and a null placeholder row
+	for(int i=0;i<MAX_SLOTS+2;i++){
 		for(int j=0;j<STR_CAP+1;j++){
 			mad_lib[i][j] = '\0'; //Set everything to null - remove junk
 		}
@@ -90,7 +90,7 @@ _Bool getUserWord(char word_type[MAX_LENGTH+1], char temp_word[MAX_LENGTH+1]){
 	}
 	return 0;
 }
-void readMadlib(char madlib[MAX_SLOTS+1][STR_CAP+1], FILE* fp ){
+void readMadlib(char madlib[MAX_SLOTS+2][STR_CAP+1], FILE* fp ){
 	char junk[STR_CAP+1]; //For getting rid of the word placholders
 	for(int row=0;row<MAX_SLOTS+1;row++){
 		fgets(madlib[row],STR_CAP,fp);
@@ -98,7 +98,7 @@ void readMadlib(char madlib[MAX_SLOTS+1][STR_CAP+1], FILE* fp ){
 	}
 }
 
-void displayFinished(char madlibs[MAX_SLOTS+1][STR_CAP+1], char inputs[MAX_SLOTS][MAX_LENGTH+1]){
+void displayFinished(char madlibs[MAX_SLOTS+2][STR_CAP+1], char inputs[MAX_SLOTS][MAX_LENGTH+1]){
 	int i=0;
 	while(madlibs[i][0] != '\0'){
 		printInline(madlibs[i]);
