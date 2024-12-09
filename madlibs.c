@@ -13,7 +13,7 @@
 #define MAX_LENGTH 50 //Max length of words
 #define STR_CAP 200 //Cap of madlib line length
 
-_Bool parseMadlib(char[MAX_SLOTS][MAX_LENGTH+1], FILE*);
+void parseMadlib(char[MAX_SLOTS][MAX_LENGTH+1], FILE*);
 void readMadlib(char madlib[MAX_SLOTS+2][STR_CAP+1], FILE* fp);
 _Bool getUserWord(char[MAX_LENGTH+1], char[MAX_LENGTH+1]);
 void displayFinished(char[MAX_SLOTS+2][STR_CAP+1], char[MAX_SLOTS][MAX_LENGTH+1]);
@@ -40,9 +40,7 @@ int main(int argc, char* argv[]){
 		if (fp == NULL){
 		printf("FILE NOT OPENED\n");
 	}
-	if(!parseMadlib(inputs, fp)){
-		return 0; //Parse error - truncate early
-	}
+	parseMadlib(inputs, fp);
 	fclose(fp);
 	FILE* fp2 = fopen(infile,"r"); //reopen file stream
 		if (fp == NULL){
@@ -58,7 +56,7 @@ int main(int argc, char* argv[]){
 	
 	return 0;
 }
-_Bool parseMadlib(char inputs[MAX_SLOTS][MAX_LENGTH+1], FILE* fin){
+void parseMadlib(char inputs[MAX_SLOTS][MAX_LENGTH+1], FILE* fin){
 	char word_type[MAX_LENGTH+1];
 	char temp_word[MAX_LENGTH+1];
 	int counter = 0; //Current index being modified
@@ -72,11 +70,7 @@ _Bool parseMadlib(char inputs[MAX_SLOTS][MAX_LENGTH+1], FILE* fin){
 			}
 			counter++;
 		}
-		else{
-			return 0;
-		}
 	}
-	return 1;
 }
 _Bool getUserWord(char word_type[MAX_LENGTH+1], char temp_word[MAX_LENGTH+1]){
 	if(word_type[0] == 'A' && word_type[2] == '\0'){ 
@@ -93,10 +87,6 @@ _Bool getUserWord(char word_type[MAX_LENGTH+1], char temp_word[MAX_LENGTH+1]){
 		printf("Please enter a verb: ");
 		fgets(temp_word, MAX_LENGTH+1, stdin);
 		return 1;
-	}
-	else{
-		printf("Error reading madlib file\n");
-		return 0;
 	}
 	return 0;
 }
