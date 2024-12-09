@@ -18,23 +18,31 @@ void readMadlib(char madlib[MAX_SLOTS+1][STR_CAP+1], FILE* fp);
 _Bool getUserWord(char[MAX_LENGTH+1], char[MAX_LENGTH+1]);
 void displayFinished(char[MAX_SLOTS+1][STR_CAP+1], char[MAX_SLOTS][MAX_LENGTH+1]);
 void printInline(char[]);
+void stringCopy(char[], char[]);
 
-int main(){
+int main(int argc, char* argv[]){
+	char infile[STR_CAP+1];
+	if(argc > 1){
+		stringCopy(argv[1], infile);
+	}
+	else{
+		stringCopy(INFILE, infile);
+	}
 	char inputs[MAX_SLOTS][MAX_LENGTH+1];
 	char mad_lib[MAX_SLOTS+1][STR_CAP+1];
 	for(int i=0;i<MAX_SLOTS+1;i++){
 		for(int j=0;j<STR_CAP+1;j++){
-			mad_lib[i][j] = '\0'; //Set everything to junk
+			mad_lib[i][j] = '\0'; //Set everything to null - remove junk
 		}
 	}
 	
-	FILE* fp = fopen(INFILE,"r"); 
+	FILE* fp = fopen(infile,"r"); 
 		if (fp == NULL){
 		printf("FILE NOT OPENED\n");
 	}
 	parseMadlib(inputs, fp);
 	fclose(fp);
-	FILE* fp2 = fopen(INFILE,"r"); 
+	FILE* fp2 = fopen(infile,"r"); //reopen file stream
 		if (fp == NULL){
 		printf("FILE NOT OPENED\n");
 	}   
@@ -99,7 +107,7 @@ void displayFinished(char madlibs[MAX_SLOTS+1][STR_CAP+1], char inputs[MAX_SLOTS
 			printInline(inputs[i]);
 		
 		}
-		if(madlibs[i+1][0] != '.'){
+		if(madlibs[i+1][0] != '.' && madlibs[i+1][0] != ',' && madlibs[i+1][0] != '!'){
 			printf(" "); 
 		}
 		i++;
@@ -117,10 +125,8 @@ void printInline(char string[]){
 		}
 	}
 }
-		
-		
-		
-	
-	
-
-
+void stringCopy(char source[], char dest[]){
+	for(int i = 0; i < STR_CAP + 1; i++){
+		dest[i] = source[i];
+	}
+}
